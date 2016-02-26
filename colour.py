@@ -1,4 +1,7 @@
-# File: clrpick.py
+# colour.py
+# A simple Tkinter GUI to test the blinkM on the Raspberry Pi.
+#
+# Based on: clrpick.py from
 #    http://infohost.nmt.edu/tcc/help/pubs/tkinter//dialogs.html#tkColorChooser
 
 from tkinter import *
