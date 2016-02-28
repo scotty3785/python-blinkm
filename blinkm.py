@@ -44,6 +44,8 @@ class blinkm:
             command = ord(command)
         self.bus.write_i2c_block_data(self.address,command,data)
 
+    def reset(self):
+        self.goToRGB((0,0,0))
 
 if __name__ == '__main__':
 
@@ -72,3 +74,4 @@ if __name__ == '__main__':
         bm.fadeToRGB(color)
         time.sleep(3)
 
+    bm.reset()
