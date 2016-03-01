@@ -42,7 +42,10 @@ class blinkm:
         """
         if isinstance(command,str):
             command = ord(command)
-        self.bus.write_i2c_block_data(self.address,command,data)
+        try:
+            self.bus.write_i2c_block_data(self.address,command,data)
+        except OSError as err:
+            print("I2C Device Error\nCheck Connection\n{}".format(err))
 
     def reset(self):
         self.goToRGB((0,0,0))
