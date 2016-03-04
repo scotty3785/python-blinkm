@@ -31,7 +31,7 @@ class blinkm:
 
     def getFirmwareVersion(self):
         """Return the BlinkM's Firmware Version"""
-        return self._readi2c('Z',1)
+        return self._readi2c('Z',2)
 
     def getRGB(self):
         """Return the current BlinkM colour"""
