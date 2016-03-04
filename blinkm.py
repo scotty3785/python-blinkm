@@ -29,12 +29,24 @@ class blinkm:
         r,g,b = color
         self._sendi2c('n',[r,g,b])
 
+    def getFirmwareVersion(self):
+        """Return the BlinkM's Firmware Version"""
+        return self._readi2c('Z',1)
+
+    def getRGB(self):
+        """Return the current BlinkM colour"""
+        self._readi2c('g',3)
+
     def setFadeSpeed(self,speed):
         """ 
         Set the fade speed of the blinkm
         """
         speed = clamp(speed,1,255)
         self._sendi2c('f',[speed])
+
+    def _readi2c(self,command,length):
+        command = ord(command)
+        return self.bus.read_i2c_block_data(self.address,command,length)
 
     def _sendi2c(self,command,data) -> None:
         """
@@ -63,11 +75,12 @@ if __name__ == '__main__':
     ## Connect the blinkm (default address is 0x09)
     ADDR = 0x09
     bm = blinkm(ADDR)
-
+    print(bm.getFirmwareVersion())
     ## Go to each color in the sequence with a 2 second gap
     for color in seq:
         bm.goToRGB(color)
-        time.sleep(2)#
+        time.sleep(2)
+        print(bm.getRGB())
 
     ## Set the Fade Speed to 1
     bm.setFadeSpeed(1)
