@@ -3,28 +3,26 @@ from os import curdir
 from blinkm import blinkm
 app = Flask(__name__)
 
-colors = ['Red', 'Blue', 'Green']
+colors = {'Red':(255,0,0), 'Blue':(0,0,255), 'Green':(0,255,0),'Orange':(255,51,0)}
 bm = blinkm()
 
 
 @app.route("/")
 def main():
     global colors
-    templateData = { 'colors' : colors }
+    cols = colors.keys()
+    templateData = { 'colors' : cols }
     return render_template('main.html', **templateData)
 
 @app.route('/<color>/<state>')
 def color_change(color,state):
     global colors
-    if color == 'Red':
-        bm.goToRGB((255,0,0))
-    elif color == 'Green':
-        bm.goToRGB((0,255,0))
-    elif color == 'Blue':
-        bm.goToRGB((0,0,255))
-    else:
+    cols = colors.keys()
+    try:
+        bm.goToRGB(colors[color])
+    except KeyError:
         bm.goToRGB((0,0,0))
-    templateData = {'colors' : colors,'new_color':color}
+    templateData = {'colors' : cols,'new_color':color}
     return render_template('main.html',**templateData)
     
 
